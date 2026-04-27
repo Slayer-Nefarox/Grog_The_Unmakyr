@@ -38,23 +38,29 @@ void setup() {
 }
 
 void loop() {
-  for (int i = 0; i < NUM_INPUTS; i++) {
+  for (int i = 0; i < NUM_INPUTS; i++) 
+  {
     bool rawState = (digitalRead(pinNumbers[i]) == LOW);
 
-    if (rawState == pressed[i]) {
+    if (rawState == pressed[i]) 
+    {
       stableCount[i] = 0;
-    } else {
+    } else 
+    {
       stableCount[i]++;
-      if (stableCount[i] >= DEBOUNCE_THRESHOLD) {
+      if (stableCount[i] >= DEBOUNCE_THRESHOLD) 
+      {
         pressed[i] = rawState;
         stableCount[i] = 0;
       }
     }
 
-    if (pressed[i] && !prevPressed[i]) {
+    if (pressed[i] && !prevPressed[i]) 
+    {
       Keyboard.press(keyCodes[i]);
     } 
-    else if (!pressed[i] && prevPressed[i]) {
+    else if (!pressed[i] && prevPressed[i]) 
+    {
       Keyboard.release(keyCodes[i]);
     }
 
@@ -98,11 +104,8 @@ void loop() {
 
   mov_x = constrain(mov_x / 50, -maxSpeed, maxSpeed);
   mov_y = constrain(mov_y / 50, -maxSpeed, maxSpeed);
-  
-  if (mov_x != 0 || mov_y != 0) {
-    Mouse.move((int)mov_x, (int)mov_y, 0);
-  }
 
+  
   static bool leftPressed = false;
   static bool rightPressed = false;
 
@@ -116,21 +119,36 @@ void loop() {
   analogRead(A3); 
   int A3_r = analogRead(A3);
 
-  if (A2_r > clickThreshold && !leftPressed) {
-    Mouse.press(MOUSE_LEFT);
-    leftPressed = true;
-  } else if (A2_r < releaseThreshold && leftPressed) {
+
+  if (mov_x != 0||abs(mov_x)>abs(mov_y)) 
+  {
+    Mouse.move((int)mov_x, 0, 0);
+  }
+  else if(mov_y != 0||abs(mov_y)>abs(mov_x))
+  {
+    Mouse.move(0, (int)mov_y, 0);
+  }
+  
+  if (A2_r > clickThreshold && !leftPressed) 
+  {
+  Mouse.press(MOUSE_LEFT);
+  leftPressed = true;
+  } 
+  else if (A2_r < releaseThreshold && leftPressed) 
+  {
     Mouse.release(MOUSE_LEFT);
     leftPressed = false;
   }
-
-  if (A3_r > clickThreshold && !rightPressed) {
+  
+  if (A3_r > clickThreshold && !rightPressed) 
+  {
     Mouse.press(MOUSE_RIGHT);
     rightPressed = true;
-  } else if (A3_r < releaseThreshold && rightPressed) {
+  } else if (A3_r < releaseThreshold && rightPressed) 
+  {
     Mouse.release(MOUSE_RIGHT);
     rightPressed = false;
   }
 
-  delay(5);
+  delay(10);
 }
