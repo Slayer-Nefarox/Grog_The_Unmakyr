@@ -81,7 +81,7 @@ void loop() {
       }
     }
 
-    // Forcing the silicon to mimic a human finger. Mercy, Lord!
+    // Forcing the silicon to mimic a human finger. Mercy, O Lord!
     if (pressed[i] && !prevPressed[i]) 
     {
       Keyboard.press(keyCodes[i]);
